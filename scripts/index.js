@@ -12,52 +12,55 @@ Example
 PostByQuery: - https://openapi.programming-hero.com/api/retro-forum/posts?category=coding
 */
 
- const loadPost=async()=>{
-    const res= await fetch('https://openapi.programming-hero.com/api/retro-forum/posts')
+ const loadPost=async(categoryName)=>{
+    const res= await fetch(`https://openapi.programming-hero.com/api/retro-forum/posts?category=${categoryName}`)
     const data= await res.json()
     const posts=data.posts
- //   console.log(posts)
-    const cardContainer=document.getElementById('card-container')
-        
-     posts.forEach(post=>{
-     //  console.log(post)
-    
-  
-     
-     
-       const postDiv= document.createElement('div')
-       postDiv.classList=`card card-side bg-[#F3F3F5] shadow-xl w-1/2 gap-8 mb-6 `
-       postDiv.innerHTML=`
-               <div class=" w-3 h-3 rounded-full absolute top-4 left-28">
-               ${post.isActive? "bg-green-700":"bg-red-500"}
-               </div>
-         <div class=" p-6 rounded-2xl"> <figure class="w-[100px] h-[100px]"><img src="${post.image}" alt="Movie"  /></figure></div>
-       <div class="card-body">
-       <div class=" flex   justify-center ">
- <h1 class="text-center"> #${post.category}t</h1>
-<p class="text-center">  Author:${ post.author.name}</p></div>
-         <h2 class="card-title">${post.title}</h2>
-         <p>${post.description}.</p>
-         <div class="card-actions justify-between">
-         <p><i class="fa-regular fa-message"></i> ${post.comment_count}</p>
-         <p><i class="fa-regular fa-eye"></i>${post.view_count}</p>
-       <p><i class="fa-regular fa-clock"></i>${post.posted_time} min</p>
-       <button class="btn btn-primary rounded-full" id=" envelope" onclick="getData('${post.title} ${post.view_count}')"><i class="fa-regular fa-envelope"></i></button>
-         </div>
-       </div>
-     </div>
-      
-     
-       `
-     //  console.log(post.title)
-     //  console.log(post.view_count)
-     cardContainer.appendChild(postDiv)
-     })
+    console.log(posts)
+    displayPosts(posts)
  }
-
-  let read=1
+    const displayPosts=(posts)=>{
+      const cardContainer=document.getElementById('card-container')  
+      cardContainer.textContent=''  
+      posts.forEach(post=>{
+      // cardContainer.textContent=''
+        console.log(post)   
+        const postDiv= document.createElement('div')
+        postDiv.classList=`card card-side bg-[#F3F3F5] shadow-xl w-1/2 gap-8 mb-6 `
+        postDiv.innerHTML=`
+                <div class=" w-3 h-3 rounded-full absolute top-4 left-28       ${post.isActive? "bg-green-700":"bg-red-500"}    ">
+               
+                </div>
+          <div class=" p-6 rounded-2xl"> <figure class="w-[100px] h-[100px]"><img src="${post.image}" alt="Movie"  /></figure></div>
+        <div class="card-body">
+        <div class=" flex   justify-center ">
+  <h1 class="text-center"> #${post.category}t</h1>
+ <p class="text-center">  Author:${ post.author.name}</p></div>
+          <h2 class="card-title">${post.title}</h2>
+          <p>${post.description}.</p>
+          <div class="card-actions justify-between">
+          <p><i class="fa-regular fa-message"></i> ${post.comment_count}</p>
+          <p><i class="fa-regular fa-eye"></i>${post.view_count}</p>
+        <p><i class="fa-regular fa-clock"></i>${post.posted_time} min</p>
+        <button class="btn btn-primary rounded-full" id=" envelope" onclick="getData('${post.title}' ,'${post.view_count}')"><i class="fa-regular fa-envelope"></i></button>
+          </div>
+        </div>
+      </div>
+       
+      
+        `
+      //  console.log(post.title)
+      //  console.log(post.view_count)
+      cardContainer.appendChild(postDiv)
+      })
+  }
+    
+   //displayPost()
+//display data end
+  
 const getData=async(title,view  )=>{
   //console.log('click',read)
+  let read=1
   let count=document.getElementById('read')
   count=read+count
  read++
@@ -72,23 +75,16 @@ const getData=async(title,view  )=>{
        </div>
          
          `
-         
-         
-         
-         
-         
-
-        readContainer.appendChild(titleDiv)
-    
+        readContainer.appendChild(titleDiv) 
 }
-
+  // latest posts
  const loadLatestPost= async()=>{
   const res= await fetch('https://openapi.programming-hero.com/api/retro-forum/latest-posts')
   const data= await res.json()
-  console.log(data)
+ // console.log(data)
   const latestPosts=document.getElementById('latest-post-container')
   data.forEach(item=>{
-    console.log(item)
+   // console.log(item)
     const card=document.createElement('div')
     card.classList=`card w-96 bg-base-100 shadow-xl`
     card.innerHTML=`
@@ -111,7 +107,7 @@ const getData=async(title,view  )=>{
                 <p class="">${item.author.name}</p>
                
             </div>
-            <p class="mt-3">${item?.author?.designation||'No  Designation' }</p>
+            <p class="mt-3">${item?.author?.designation||'Unknown' }</p>
         </div>
     </div>
 </div>
@@ -126,13 +122,30 @@ const getData=async(title,view  )=>{
 
 
 
+// handel show search
+  const  handelSearch= ( )=>{
+    const searchInput=document.getElementById('search-input').value
+   const searchText=searchInput
+   console.log(searchText)
+
+   loadPost(searchText)
+         
+
+  
+
+  }
+  
+
+
+//handelSearch()
+
 
 loadLatestPost()
 
 
 
 getData()
- loadPost()
+ loadPost('comedy')
 
 
 
@@ -166,3 +179,15 @@ allDAta.forEach(item=>{
 
 
  //class=" w-3 h-3 rounded-full absolute top-4 left-28 bg-green-700
+// ${post.isActive? "bg-green-700":"bg-red-500"}
+
+
+
+/*const handleSearch=()=>{
+  const value=document.getElementById('search-box').value
+  if(value){
+    loadNews(value)
+  }else{
+    alert("please enter valid ")
+  }
+}*/
