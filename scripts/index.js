@@ -99,6 +99,9 @@ const loadAllPost=async()=>{
       toggledSpinner(false)
   }
   
+   setTimeout(()=>{
+         displayPosts(posts)
+       },2000)
    //displayPost()
 //display data end
   
