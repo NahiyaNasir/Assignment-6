@@ -21,7 +21,7 @@ const loadAllPost=async()=>{
      allPost.forEach(item=>{
   const cardContainer=document.getElementById('card-container')  
   const postDiv= document.createElement('div')
-        postDiv.classList=`card card-side bg-[#F3F3F5] shadow-xl  gap-8 mb-6 `
+        postDiv.classList=`card card-side bg-teal-200 shadow-xl  gap-8 mb-6 `
         postDiv.innerHTML=`
                 <div class=" w-3 h-3 rounded-full absolute top-4 left-28       ${item.isActive? "bg-green-700":"bg-red-500"}    ">
                
@@ -37,7 +37,7 @@ const loadAllPost=async()=>{
           <p><i class="fa-regular fa-message"></i> ${item.comment_count}</p>
           <p><i class="fa-regular fa-eye"></i>${item.view_count}</p>
         <p><i class="fa-regular fa-clock"></i>${item.posted_time} min</p>
-        <button class="btn btn-primary rounded-full" id=" envelope" onclick="getData('${item.title.replace(/'/g,"")}' ,'${item.view_count}')"><i class="fa-regular fa-envelope"></i></button>
+        <button class="btn btn-primary rounded-full" id=" envelope" onclick="getData('${item.title.replace(/'/g,"@")}' ,'${item.view_count}')"><i class="fa-regular fa-envelope"></i></button>
           </div>
         </div>
       </div>
@@ -65,7 +65,7 @@ const loadAllPost=async()=>{
       // cardContainer.textContent=''
    //     console.log(post)   
         const postDiv= document.createElement('div')
-        postDiv.classList=`card card-side bg-[#F3F3F5] shadow-xl   gap-8 mb-6 `
+        postDiv.classList=`card card-side bg-teal-200 shadow-xl   gap-8 mb-6 `
         postDiv.innerHTML=`
                 <div class=" w-3 h-3 rounded-full absolute top-4 left-28       ${post.isActive? "bg-green-700":"bg-red-500"}    ">
                
@@ -81,7 +81,7 @@ const loadAllPost=async()=>{
           <p><i class="fa-regular fa-message"></i> ${post.comment_count}</p>
           <p><i class="fa-regular fa-eye"></i>${post.view_count}</p>
         <p><i class="fa-regular fa-clock"></i>${post.posted_time} min</p>
-        <button class="btn btn-primary rounded-full" id=" envelope" onclick="getData('${post.title.replace(/'/g,"")}' ,'${post.view_count}')"><i class="fa-regular fa-envelope"></i></button>
+        <button class="btn btn-primary rounded-full" id=" envelope" onclick="getData('${post.title.replace(/'/g,"@")}' ,'${post.view_count}')"><i class="fa-regular fa-envelope"></i></button>
           </div>
         </div>
       </div>
@@ -92,18 +92,25 @@ const loadAllPost=async()=>{
       //  console.log(post.view_count)
       cardContainer.appendChild(postDiv)
       })
+      setTimeout(()=>{
+        toggledSpinner(true)
+       },2000)
       //hide 
       toggledSpinner(false)
   }
-    
+  
    //displayPost()
 //display data end
   
 const getData=async(title,view  )=>{
   console.log('click')
-  let markAsRead=document.getElementById('read')
+  
+  const markAsRead=document.getElementById('read')
+  let readCount=parseInt(markAsRead.innerText)
+ readCount++
+ markAsRead.innerText=readCount
   console.log(markAsRead)
-  let count=0
+ 
   
   
  
@@ -122,8 +129,8 @@ const getData=async(title,view  )=>{
          
          `
         readContainer.appendChild(titleDiv) 
-        count++
-      `  markAsRead(${count})`
+       
+    
         
 
 }
@@ -173,11 +180,13 @@ const getData=async(title,view  )=>{
 // handel show search
 const  handelSearch= ( )=>{
  toggledSpinner(true)
+ 
   const searchInput=document.getElementById('search-input').value
  const searchText=searchInput
  console.log(searchText)
  
  loadPost(searchText)
+
 
      //  getData()
 
@@ -194,7 +203,7 @@ const  handelSearch= ( )=>{
     spinner.classList.add('hidden')
  }
    }
-
+    
 
   
   
