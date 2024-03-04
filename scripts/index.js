@@ -21,7 +21,7 @@ const loadAllPost=async()=>{
      allPost.forEach(item=>{
   const cardContainer=document.getElementById('card-container')  
   const postDiv= document.createElement('div')
-        postDiv.classList=`card card-side bg-teal-200 shadow-xl  gap-8 mb-6 `
+        postDiv.classList=`card card-side bg-teal-200 shadow-xl  gap-8 mb-6 lg:flex-row flex-col`
         postDiv.innerHTML=`
                 <div class=" w-3 h-3 rounded-full absolute top-4 left-28       ${item.isActive? "bg-green-700":"bg-red-500"}    ">
                
@@ -65,13 +65,13 @@ const loadAllPost=async()=>{
       // cardContainer.textContent=''
    //     console.log(post)   
         const postDiv= document.createElement('div')
-        postDiv.classList=`card card-side bg-teal-200 shadow-xl   gap-8 mb-6 `
+        postDiv.classList=`card card-side bg-teal-200 shadow-xl   gap-8 mb-6   lg:flex-row flex-col `
         postDiv.innerHTML=`
                 <div class=" w-3 h-3 rounded-full absolute top-4 left-28       ${post.isActive? "bg-green-700":"bg-red-500"}    ">
                
                 </div>
-          <div class=" p-6 rounded-2xl"> <figure class="w-[100px] h-[100px]"><img src="${post.image}" alt="Movie"  /></figure></div>
-        <div class="card-body">
+          <div class=" p-6 rounded-2xl "> <figure class="w-[100px] h-[100px]"><img src="${post.image}" alt="Movie"  /></figure></div>
+        <div class="card-body ">
         <div class=" flex   justify-center ">
   <h1 class="text-center"> #${post.category}</h1>
  <p class="text-center">  Author:${ post.author.name}</p></div>
@@ -92,9 +92,9 @@ const loadAllPost=async()=>{
       //  console.log(post.view_count)
       cardContainer.appendChild(postDiv)
       })
-      setTimeout(()=>{
+     /* setTimeout(()=>{
         toggledSpinner(true)
-       },2000)
+       },2000)*/
       //hide 
       toggledSpinner(false)
   }
